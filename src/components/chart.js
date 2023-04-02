@@ -1,4 +1,4 @@
-/* Refer to https://gionkunz.github.io/chartist-js/examples.html for setting up the graphs */
+document.addEventListener("DOMContentLoaded", function() {
 
 var mainChart = new Chartist.Line(
   "#chart1",
@@ -146,4 +146,5 @@ chartPie.on("draw", function (data) {
 
     data.element.animate(animationDefinition, false);
   }
+  });
 });
