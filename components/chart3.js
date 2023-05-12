@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
+  //BOXPLOT
   d3.csv("https://gist.githubusercontent.com/xdavld/fcf471b05e97587489285d9d86aba72c/raw/db159232908e43b34c3e90fbbf049ecd52be057f/arrival_delay_boxplot.csv", function(data) {
+    //Nur positive Werte
     var filteredData = data.filter(function (d) {
       return d.ARRIVAL_DELAY > 0;
     });
@@ -21,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
       };
     });
 
-    // Create the layout
+    // Layout anpassen
     var layout = {
       plot_bgcolor: "rgba(0,0,0,0)",
       paper_bgcolor: "rgba(0,0,0,0)",
@@ -36,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     };
 
+    // Plot zeichnen
     Plotly.newPlot("chart3", traces, layout, { displayModeBar: false });
   });
 

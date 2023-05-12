@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  var delayTypeSelect = document.getElementById("delay-type");
+  var delayAirport = document.getElementById("delay-type");
   var h31 = document.getElementById("h3-1");
   var h51 = document.getElementById("h5-1");
   var h32 = document.getElementById("h3-2");
@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var h54 = document.getElementById("h5-4");
   var airlinetype = document.getElementById("airline-type");
   
+  //MAP - AIRPORTS
   function updateData(delayType) {
     d3.csv(
       "https://gist.githubusercontent.com/xdavld/a1252aa0606d4af3cf3f3fe3f8ad027c/raw/7a7ee3a61086b4875b8193170ef31ea71134ca31/airport_map.csv",
@@ -92,13 +93,14 @@ document.addEventListener("DOMContentLoaded", function () {
     );
   }
 
-delayTypeSelect.addEventListener("change", function () {
-  updateData(delayTypeSelect.value);
+  //JAVA SCRIPT
+delayAirport.addEventListener("change", function () {
+  updateData(delayAirport.value);
 });
 
-updateData(delayTypeSelect.value);
-  delayTypeSelect.addEventListener("change", function () {
-    var selectedValue = delayTypeSelect.value;
+updateData(delayAirport.value);
+  delayAirport.addEventListener("change", function () {
+    var selectedValue = delayAirport.value;
     if (selectedValue === "MEAN_DEPARTURE_DELAY") {
       h31.textContent = "223 [min]";
       h51.textContent = "Nummer 1: LAW";
@@ -122,14 +124,14 @@ updateData(delayTypeSelect.value);
     }
   });
 
+  //MAP - FLUGROUTEN
   d3.csv(
     "https://gist.githubusercontent.com/xdavld/c0490fc7d9fe3fea278102338155dd44/raw/088160c2500a1dabbb7d512710ccc1a86ce45785/flugrouten.csv",
     function (err, rows) {
-      // Add an event listener to the select element
       d3.select("#airline-type").on("change", function () {
-        // Get the value of the selected option
-        var selectedAirline = this.value;
 
+        // Anzeigen der ausgewählten Airline
+        var selectedAirline = this.value;
         if (selectedAirline === "---") {
           updateVisualization(filteredRows === []);
         } else {
@@ -152,7 +154,7 @@ updateData(delayTypeSelect.value);
 
       function updateVisualization(rows) {
         var data = [];
-        var count = unpack(rows, "AIR");
+        var count = unpack(rows, "AIRLINE");
         var startLongitude = unpack(rows, "ORIGIN_AIRPORT_LON");
         var endLongitude = unpack(rows, "DESTINATION_AIRPORT_LON");
         var startLat = unpack(rows, "ORIGIN_AIRPORT_LAT");
@@ -166,14 +168,18 @@ updateData(delayTypeSelect.value);
             locationmode: "USA-states",
             lon: [startLongitude[i], endLongitude[i]],
             lat: [startLat[i], endLat[i]],
-            mode: "lines",
+            mode: "lines+markers",
             line: {
               width: 0.5,
               color: "red",
             },
             opacity: opacityValue,
+            hoverinfo: "lon,lat,text",
+            text:
+              [rows[i]["ORIGIN_AIRPORT"]] +
+              " - " +
+              [rows[i]["DESTINATION_AIRPORT"]],
           };
-
           data.push(result);
         }
         Plotly.newPlot("chart5", data, layout, { showLink: false });

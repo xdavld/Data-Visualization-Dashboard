@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
-
+  //TREEMAP ORIGIN & DESTINATION
   d3.csv(
     "https://gist.githubusercontent.com/xdavld/7e5231fa7930ac28a0db4d26c92eac01/raw/b9b31896669f498776f04bb907ba2571da05a96f/treemap_origin_stats.csv",
     function (err1, firstData) {
       d3.csv(
         "https://gist.githubusercontent.com/xdavld/41aba9c8c37f8eccd9ac2ae233b375aa/raw/bee0320c728a09398113aeb7e531d1bc33dc0cb6/treemap_destination_stats.csv",
         function (err2, secondData) {
-          // Use firstData and secondData to generate your plot
+          // Einlesen von zwei CSV-Dateien / Treemap Origin und Treemap Destination
           function unpack(rows, key) {
             return rows.map(function (row) {
               return row[key];

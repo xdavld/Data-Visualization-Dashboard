@@ -1,20 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
+  //SCATTERPLOT
   d3.csv(
     "https://gist.githubusercontent.com/xdavld/ba3141ee7811703e68f6d1c10ab3417c/raw/1c71b67aa7d40b49fc08db132d5087e814eadcfb/mean_arrival_delay.csv",
     function (rows) {
-      // create an array of traces, one for each airline
+      //Arrays für die Airlines und die Traces
       var traces = [];
       var airlines = [];
-      var prevData = {};
+      var linecolor = {};
 
       rows.forEach(function (row) {
         var airline = row.AIRLINE;
         var i = airlines.indexOf(airline);
-        if (i === -1) {
-          i = airlines.length;
-          airlines.push(airline);
-        }
-
+  
         if (!traces[i]) {
           traces[i] = {
             x: [],
@@ -34,16 +31,17 @@ document.addEventListener("DOMContentLoaded", function () {
           color = "rgb(0, " + (125 + delay * -20) + ", 0)";
         }
 
-        if (prevData[airline]) {
+        if (linecolor[airline]) {
           traces.push({
-            x: [prevData[airline].delay, delay],
-            y: [prevData[airline].month, row.MONTH],
+            x: [linecolor[airline].delay, delay],
+            y: [linecolor[airline].month, row.MONTH],
             mode: "lines",
             line: { color: color },
             name: airline,
             showlegend: false,
           });
         }
+        linecolor[airline] = { delay: delay, month: row.MONTH };
 
         traces.push({
           x: [delay],
@@ -55,7 +53,6 @@ document.addEventListener("DOMContentLoaded", function () {
           hoverinfo: "none",
         });
 
-        prevData[airline] = { delay: delay, month: row.MONTH };
       });
 
       airlines.forEach(function (airline, i) {
@@ -106,61 +103,63 @@ document.addEventListener("DOMContentLoaded", function () {
         height: 800,
       };
 
-      // plot the chart
-      var chart = Plotly.newPlot("chart1", traces, layout, {
+      // Chart zeichnen
+      Plotly.newPlot("chart1", traces, layout, {
         displayModeBar: false,
       });
 
-      // select the dash-content div and the two h3 elements
+      //JAVASCRIPT
+      // Dash Boxen anpassen mit JavaScript
       var dashContent = document.getElementById("dash-content");
-      var airlineElement = dashContent.querySelector(".text-3xl");
-      var delayElement = dashContent.querySelectorAll(".text-3xl")[1];
+      var airlineBox = dashContent.querySelector(".text-3xl");
+      var delayBox = dashContent.querySelectorAll(".text-3xl")[1];
 
-      var myPlot = document.getElementById("chart1");
-      myPlot.on("plotly_hover", function (eventData) {
+      var scatterPlot = document.getElementById("chart1");
+      scatterPlot.on("plotly_hover", function (eventData) {
         var hoveredTrace = eventData.points[0].curveNumber;
         var tracesToChange = [];
-        for (var i = 0; i < myPlot.data.length; i++) {
-          if (myPlot.data[i].name === myPlot.data[hoveredTrace].name) {
+        for (var i = 0; i < scatterPlot.data.length; i++) {
+          if (
+            scatterPlot.data[i].name === scatterPlot.data[hoveredTrace].name
+          ) {
             tracesToChange.push(i);
           }
         }
-        Plotly.restyle(myPlot, "opacity", 0.1);
-        Plotly.restyle(myPlot, "opacity", 1, tracesToChange);
+        Plotly.restyle(scatterPlot, "opacity", 0.1);
+        Plotly.restyle(scatterPlot, "opacity", 1, tracesToChange);
       });
 
-      myPlot.on("plotly_unhover", function () {
-        Plotly.restyle(myPlot, "opacity", 1);
+      scatterPlot.on("plotly_unhover", function () {
+        Plotly.restyle(scatterPlot, "opacity", 1);
       });
 
-      // add a hover event to the chart
+      // Hover Effekt
       document.getElementById("chart1").on("plotly_hover", function (data) {
-        // get the data of the hovered point
         var pointData = data.points[0];
-        var delayFormatted;
+        var timeFormat;
         if (pointData.x >= 0) {
-          delayFormatted =
+          timeFormat =
             "+" +
             d3.format("02d")(Math.floor(pointData.x / 60)) +
             ":" +
             d3.format("02d")(Math.floor(pointData.x % 60));
         } else {
-          delayFormatted =
+          timeFormat =
             "-" +
             d3.format("02d")(Math.abs(pointData.x / 60)) +
             ":" +
             d3.format("02d")(Math.abs(Math.floor(pointData.x % 60)));
         }
 
-        // update the content of the airline and delay elements
-        airlineElement.innerText = pointData.data.name;
-        delayElement.innerText = delayFormatted;
+        // Javascript Elemente anpassen
+        airlineBox.innerText = pointData.data.name;
+        delayBox.innerText = timeFormat;
       });
-      // add a hover event to the chart
+      // Hover Effekt entfernen
       document.getElementById("chart1").on("plotly_unhover", function (data) {
-        // update the content of the airline and delay elements
-        airlineElement.innerText = "---";
-        delayElement.innerText = "---";
+        // Javascript Elemente anpassen
+        airlineBox.innerText = "---";
+        delayBox.innerText = "---";
       });
     }
   );
