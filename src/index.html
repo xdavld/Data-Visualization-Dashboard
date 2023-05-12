@@ -18,10 +18,74 @@
     <link rel="stylesheet" href="./index.css">
     <link type="image/png" sizes="32x32" rel="icon" href="./components/icons8-small-airplane-32.png">
     
+    <!-- Load d3.js -->
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> 
+    <script src='https://cdn.plot.ly/plotly-2.20.0.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5"></script>
+    
+    <!-- Color Scale -->
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
     <!--Java Script-->
     <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
-    <script src="./components/chart.js"></script>
     <script src="./components/dropdown.js"></script>
+
+    <script src="./components/chart1.js"></script>
+    <script src="./components/chart2.js"></script>
+    <script src="./components/chart3.js"></script>
+
+    <style>
+                /* Style the button that opens the modal window */
+        #open-modal {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        }
+
+        /* Style the modal window */
+        .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Style the modal content */
+        .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%; /* Could be more or less, depending on screen size */
+        }
+
+        /* Style the close button */
+        .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+        }
+	</style>
 
 </head>
 
@@ -53,7 +117,7 @@
                 <div class="px-2 w-full">
                     <select name="" class="bg-gray-300 border-2 border-gray-200 rounded-full w-full py-3 px-4 text-gray-500 font-bold leading-tight focus:outline-none focus:bg-white focus:shadow-md" id="form-field2">
                         <option value="Flugdaten">Flugdaten</option>
-                        <option value="Wetterdaten">Flug und Wetterdaten</option>
+                        <option value="Wetterdaten">Flugkarte</option>
                     </select>
                 </div>
 
@@ -74,17 +138,17 @@
         </div>
 
         <!--Dash Content -->
-        <div id="dash-content" class="bg-gray-200 py-6 lg:py-0 w-full lg:max-w-sm flex flex-wrap content-start">
+        <div id="dash-content" class="bg-gray-200 py-6 lg:py-0 w-full lg:max-w-sm flex flex-wrap content-center">
 
             <div class="w-1/2 lg:w-full">
                 <div class="border-2 border-gray-400 border-dashed hover:border-transparent hover:bg-white hover:shadow-xl rounded p-6 m-2 md:mx-10 md:my-6">
                     <div class="flex flex-col items-center">
                         <div class="flex-shrink pr-4">
-                            <div class="rounded-full p-3 bg-gray-300"><i class="fa fa-wallet fa-fw fa-inverse text-indigo-500"></i></div>
+                            <div class="rounded-full p-3 bg-gray-300"><i class="fas fa-plane fa-fw fa-inverse text-indigo-500"></i></div>
                         </div>
                         <div class="flex-1">
-                            <h3 class="font-bold text-3xl">$3249 <span class="text-green-500"><i class="fas fa-caret-up"></i></span></h3>
-                            <h5 class="font-bold text-gray-500">Total Revenue</h5>
+                            <h3 class="font-bold text-3xl">--- <span class="text-orange-500"></span></h3>
+                            <h5 class="font-bold text-gray-500">Airline</h5>
                         </div>
                     </div>
                 </div>
@@ -94,39 +158,11 @@
                 <div class="border-2 border-gray-400 border-dashed hover:border-transparent hover:bg-white hover:shadow-xl rounded p-6 m-2 md:mx-10 md:my-6">
                     <div class="flex flex-col items-center">
                         <div class="flex-shrink pr-4">
-                            <div class="rounded-full p-3 bg-gray-300"><i class="fas fa-users fa-fw fa-inverse text-indigo-500"></i></div>
+                            <div class="rounded-full p-3 bg-gray-300"><i class="fas fa-hourglass-half fa-fw fa-inverse text-indigo-500"></i></div>
                         </div>
                         <div class="flex-1">
-                            <h3 class="font-bold text-3xl">249 <span class="text-orange-500"><i class="fas fa-exchange-alt"></i></span></h3>
-                            <h5 class="font-bold text-gray-500">Total Users</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="w-1/2 lg:w-full">
-                <div class="border-2 border-gray-400 border-dashed hover:border-transparent hover:bg-white hover:shadow-xl rounded p-6 m-2 md:mx-10 md:my-6">
-                    <div class="flex flex-col items-center">
-                        <div class="flex-shrink pr-4">
-                            <div class="rounded-full p-3 bg-gray-300"><i class="fas fa-user-plus fa-fw fa-inverse text-indigo-500"></i></div>
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="font-bold text-3xl">2 <span class="text-yellow-600"><i class="fas fa-caret-up"></i></span></h3>
-                            <h5 class="font-bold text-gray-500">New Users</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="w-1/2 lg:w-full">
-                <div class="border-2 border-gray-400 border-dashed hover:border-transparent hover:bg-white hover:shadow-xl rounded p-6 m-2 md:mx-10 md:my-6">
-                    <div class="flex flex-col items-center">
-                        <div class="flex-shrink pr-4">
-                            <div class="rounded-full p-3 bg-gray-300"><i class="fas fa-server fa-fw fa-inverse text-indigo-500"></i></div>
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="font-bold text-3xl">152 days</h3>
-                            <h5 class="font-bold text-gray-500">Server Uptime</h5>
+                            <h3 class="font-bold text-3xl">--- <span class="text-yellow-600"></i></span></h3>
+                            <h5 class="font-bold text-gray-500">Delay</h5>
                         </div>
                     </div>
                 </div>
@@ -139,102 +175,93 @@
 
             <div class="flex flex-1 flex-wrap">
 
-                <div class="w-full xl:w-2/3 p-6 xl:max-w-6xl">
+                <div class="w-full xl:w-3/5 p-2 xl:max-w-6xl">
 
                     <!--"Container" for the graphs"-->
                     <div class="max-w-full lg:max-w-3xl xl:max-w-5xl">
 
                         <!--Graph Card-->
                         <div class="border-b p-3">
-                            <h5 class="font-bold text-black">Graph</h5>
+                            <h5 class="font-bold text-black">Die schnellste Airline <i class="fas fa-info fa-fw fa-inverse text-indigo-500 cursor-pointer" onclick="openModal('Here\'s some other information you wanted to show in a modal window.')"></i></h5>
                         </div>
                         <div class="p-5">
                             <div class="ct-chart ct-golden-section" id="chart1"></div>
                         </div>
                         <!--/Graph Card-->
-
-                        <!--Table Card-->
-                        <div class="p-3">
-                            <div class="border-b p-3">
-                                <h5 class="font-bold text-black">Table</h5>
-                            </div>
-                            <div class="p-5">
-                                <table class="w-full p-5 text-gray-700">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-left text-blue-900">Name</th>
-                                            <th class="text-left text-blue-900">Side</th>
-                                            <th class="text-left text-blue-900">Role</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <tr>
-                                            <td>Obi Wan Kenobi</td>
-                                            <td>Light</td>
-                                            <td>Jedi</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Greedo</td>
-                                            <td>South</td>
-                                            <td>Scumbag</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Darth Vader</td>
-                                            <td>Dark</td>
-                                            <td>Sith</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                                <p class="py-2"><a href="#">See More issues...</a></p>
-
-                            </div>
-                        </div>
-                        <!--/table Card-->
                     </div>
                 </div>
 
-                <div class="w-full xl:w-1/3 p-6 xl:max-w-4xl border-l-1 border-gray-300">
-
+                <div class="w-full xl:w-2/5 p-2 border-l-1 border-gray-300">
+                    
                     <!--"Container" for the graphs"-->
                     <div class="max-w-sm lg:max-w-3xl xl:max-w-5xl">
-
                         <!--Graph Card-->
+                       <div class="border-b p-3">
+                        <h5 class="font-bold text-black">Anzahl der Flüge pro Airline und Distanz in 1000 Meilen <i class="fas fa-info fa-fw fa-inverse text-indigo-500 cursor-pointer" onclick="openModal('Dieses Chart beschreibt die Anzahl der Flüge und geflogene Distanz, in 1000 Meilen [mi], pro Airline im Januar 2015. Auffällig ist dabei, dass die kleinen Airlines eine relativ hohe Anzahl an Flügen im Verhältnis zu der geflogenen Strecke haben. Sie fliegen daher im Durchschnitt eine kürzerere Strecke pro Flug.')"></i>
+                            <div id="info-modal" class="modal">
+                                <div class="modal-content">
+                                    <span class="close">&times;</span>
+                                    <p id="modal-text"></p>
+                                </div>
+                            </div>
+                        </h5> 
+                    </div>
+                    <div class="p-5">
+                        <div class="ct-chart ct-golden-section" id="chart2"></div>
+                    </div>
 
-                        <div class="border-b p-3">
-                            <h5 class="font-bold text-black">Graph</h5>
-                        </div>
-                        <div class="p-5">
-                            <div class="ct-chart ct-golden-section" id="chart2"></div>
-                        </div>
+                    <!--/Graph Card-->
 
-                        <!--/Graph Card-->
-
-                        <!--Graph Card-->
-                        <div class="border-b p-3">
-                            <h5 class="font-bold text-black">Graph</h5>
-                        </div>
-                        <div class="p-5">
-                            <div class="ct-chart ct-golden-section" id="chart3"></div>
-                        </div>
-
-                        <!--/Graph Card-->
-
-                        <!--Graph Card-->
-
-                        <div class="border-b p-3">
-                            <h5 class="font-bold text-black">Graph</h5>
-                        </div>
-                        <div class="p-5">
-                            <div class="ct-chart ct-golden-section" id="chart4"></div>
-                        </div>
-
+                    <!--Graph Card-->
+                    <div class="border-b p-3">
+                            <h5 class="font-bold text-black">Airlines mit Verzögerungszeit (in Minuten) <i class="fas fa-info fa-fw fa-inverse text-indigo-500 cursor-pointer" onclick="openModal('Here\'s some other information you wanted to show in a modal window.')"></i>
+                            <div id="info-modal" class="modal">
+                                <div class="modal-content">
+                                    <span class="close">&times;</span>
+                                    <p id="modal-text"></p>
+                                </div>
+                            </div>
+                        </h5>
+                    </div>
+                    <div class="p-5">
+                        <div class="ct-chart ct-end" id="chart3"></div>
+                    </div>
                         <!--/Graph Card-->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function openModal(content) {
+        // Get the modal
+        var modal = document.getElementById("info-modal");
+
+        // Get the <span> element that closes the modal
+        var span = modal.getElementsByClassName("close")[0];
+
+        // Get the modal text element
+        var modalText = document.getElementById("modal-text");
+
+        // Set the content of the modal text element
+        modalText.innerHTML = content;
+
+        // When the user clicks on the button, open the modal
+        modal.style.display = "block";
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
+    </script>
 </body>
 </html>
