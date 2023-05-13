@@ -8,10 +8,12 @@ document.addEventListener("DOMContentLoaded", function () {
       var airlines = [];
       var linecolor = {};
 
+      //Daten in die Arrays pushen
       rows.forEach(function (row) {
         var airline = row.AIRLINE;
         var i = airlines.indexOf(airline);
   
+        // Wenn die Airline noch nicht im Array ist, dann wird sie hinzugefügt
         if (!traces[i]) {
           traces[i] = {
             x: [],
@@ -23,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
           };
         }
 
+        //Wenn die Airlineverspätung größer als 0 ist, dann wird die Farbe rot, ansonsten grün
         var delay = parseFloat(row.ARRIVAL_DELAY);
         var color;
         if (delay >= 0) {
@@ -31,6 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
           color = "rgb(0, " + (125 + delay * -20) + ", 0)";
         }
 
+        //Farbe und Verspätung für die Linie setzen
         if (linecolor[airline]) {
           traces.push({
             x: [linecolor[airline].delay, delay],
@@ -43,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         linecolor[airline] = { delay: delay, month: row.MONTH };
 
+        //Verspätung und Farbe für die Marker setzen
         traces.push({
           x: [delay],
           y: [row.MONTH],
@@ -55,16 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       });
 
-      airlines.forEach(function (airline, i) {
-        traces.push({
-          x: [],
-          y: [],
-          mode: "lines",
-          name: airline,
-          showlegend: true,
-        });
-      });
-
+      //Layout für den Scatterplot
       var layout = {
         plot_bgcolor: "rgba(0,0,0,0)",
         paper_bgcolor: "rgba(0,0,0,0)",

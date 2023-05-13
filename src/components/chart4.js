@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
           }
 
+          //Daten aus eingelesenen Daten einsetzen
           var data = [
             {
               type: "treemap",
@@ -36,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
             },
           ];
 
+          //Layout für die Treemap
           var layout = {
             plot_bgcolor: "rgba(0,0,0,0)",
             paper_bgcolor: "rgba(0,0,0,0)",
@@ -52,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
             },
           };
 
+          //Plot zeichnen
           Plotly.newPlot(
             "chart4",
             data,

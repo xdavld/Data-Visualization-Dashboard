@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+  //Variablen definieren für Javascript Änderungen
   var delayAirport = document.getElementById("delay-type");
   var h31 = document.getElementById("h3-1");
   var h51 = document.getElementById("h5-1");
@@ -21,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
           });
         }
 
+        //Daten setzen aus CSV
         var airport = unpack(rows, "AIRPORT"),
           delay = unpack(rows, delayType),
           airportLat = unpack(rows, "ORIGIN_LAT"),
@@ -28,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
           airportSize = [],
           hoverText = [];
 
+        //Größe der Punkte setzen
         for (var i = 0; i < delay.length; i++) {
           var currentSize = delay[i];
           if (currentSize > 0) {
@@ -38,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         }
 
+        //Daten für die Map setzen 
         var data = [
           {
             type: "scattergeo",
@@ -57,6 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
           },
         ];
 
+        //Layout für die Map setzen
         var layout = {
           showlegend: false,
           plot_bgcolor: "rgba(0,0,0,0)",
@@ -82,6 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
           },
         };
 
+        //Map zeichnen
         Plotly.newPlot(
           "chart5",
           data,
@@ -98,6 +104,7 @@ delayAirport.addEventListener("change", function () {
   updateData(delayAirport.value);
 });
 
+//Updaten der JavaSCript Daten
 updateData(delayAirport.value);
   delayAirport.addEventListener("change", function () {
     var selectedValue = delayAirport.value;
@@ -142,16 +149,19 @@ updateData(delayAirport.value);
         }
       });
 
+      //Daten aus CSV setzen
       function unpack(rows, key) {
         return rows.map(function (row) {
           return row[key];
         });
       }
 
+      //Maximale Anzahl an Flügen
       function getMaxOfArray(numArray) {
         return Math.max.apply(null, numArray);
       }
 
+      //Map zeichnen
       function updateVisualization(rows) {
         var data = [];
         var count = unpack(rows, "AIRLINE");
@@ -160,9 +170,11 @@ updateData(delayAirport.value);
         var startLat = unpack(rows, "ORIGIN_AIRPORT_LAT");
         var endLat = unpack(rows, "DESTINATION_AIRPORT_LAT");
 
+        //Opacity je nach Anzahl der Flüge
         for (var i = 0; i < count.length; i++) {
           var opacityValue = count[i] / getMaxOfArray(count);
 
+          //Daten für die Map setzen
           var result = {
             type: "scattergeo",
             locationmode: "USA-states",
@@ -182,9 +194,11 @@ updateData(delayAirport.value);
           };
           data.push(result);
         }
+        //Chart zeichnen
         Plotly.newPlot("chart5", data, layout, { showLink: false });
       }
 
+      //Layout für die Map setzen
       var layout = {
         showlegend: false,
         plot_bgcolor: "rgba(0,0,0,0)",

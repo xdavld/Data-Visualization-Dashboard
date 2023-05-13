@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return d.ARRIVAL_DELAY > 0;
     });
 
+    //Daten gruppieren der Flüge pro Airline
     var groupedData = filteredData.reduce(function (acc, d) {
       if (!acc[d.AIRLINE]) {
         acc[d.AIRLINE] = [];
@@ -14,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return acc;
     }, {});
 
+    //Boxplot erstellen aus gruppierten Daten
     var traces = Object.keys(groupedData).map(function (airline) {
       return {
         y: airline,
