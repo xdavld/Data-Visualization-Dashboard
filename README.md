@@ -1,4 +1,9 @@
 # [Flugdaten Dashboard](https://www.davidkreismann.me/) - [Minimal Admin Dashboard Template](https://www.tailwindtoolbox.com/templates/minimal-admin-template)
+
+## Anmerkungen zum Flugdaten Dashboard / Abschlussaufgabe
+* Das Dashboard ist unter der URL - [davidkreismann.me](https://www.davidkreismann.me/) möglich zu betrachten, ansonten über die index.html im src - Ordner. 
+* Die Dokumentaion lässt sich ebenfalls über das Dashboard direkt öffnen, ansonsten über die Dokumentaion.pdf - Datei.
+* Screenshots sind aus dem Screenshots - Ordner zu entnehmen
 ## Creator of the Template 
 
 [Tailwind Toolbox](https://www.tailwindtoolbox.com/) was created by and is maintained by **[Amrit Nagi](https://amritnagi.info/)**, Co-owner of [Astrava.Solutions](https://astrava.solutions).
