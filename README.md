@@ -2,7 +2,7 @@
 
 ## Anmerkungen zum Flugdaten Dashboard / Abschlussaufgabe
 * Das Dashboard ist unter der URL - [davidkreismann.me](https://www.davidkreismann.me/) möglich zu betrachten, ansonten über die index.html im src - Ordner. 
-* Die Dokumentaion lässt sich ebenfalls über das Dashboard direkt öffnen, ansonsten über die Dokumentaion.pdf - Datei.
+* Die Dokumentaion lässt sich ebenfalls über das Dashboard direkt öffnen, ansonsten über die Dokumentation.pdf - Datei.
 * Screenshots sind aus dem Screenshots - Ordner zu entnehmen
 ## Creator of the Template 
 
