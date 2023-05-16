@@ -1,3 +1,5 @@
+//An folgender Dokumentation orientiert: https://plotly.com/javascript/bubble-maps/ und https://plotly.com/javascript/lines-on-maps/
+
 document.addEventListener("DOMContentLoaded", function () {
   //Variablen definieren für Javascript Änderungen
   var delayAirport = document.getElementById("delay-type");
@@ -10,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var h34 = document.getElementById("h3-4");
   var h54 = document.getElementById("h5-4");
   var airlinetype = document.getElementById("airline-type");
-  
+
   //MAP - AIRPORTS
   function updateData(delayType) {
     d3.csv(
@@ -41,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         }
 
-        //Daten für die Map setzen 
+        //Daten für die Map setzen
         var data = [
           {
             type: "scattergeo",
@@ -52,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
             text: hoverText,
             marker: {
               size: airportSize,
-              color: 'red',
+              color: "red",
               line: {
                 color: "black",
                 width: 1,
@@ -100,12 +102,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   //JAVA SCRIPT
-delayAirport.addEventListener("change", function () {
-  updateData(delayAirport.value);
-});
+  delayAirport.addEventListener("change", function () {
+    updateData(delayAirport.value);
+  });
 
-//Updaten der JavaSCript Daten
-updateData(delayAirport.value);
+  //Updaten der JavaSCript Daten
+  updateData(delayAirport.value);
   delayAirport.addEventListener("change", function () {
     var selectedValue = delayAirport.value;
     if (selectedValue === "MEAN_DEPARTURE_DELAY") {
@@ -136,7 +138,6 @@ updateData(delayAirport.value);
     "https://gist.githubusercontent.com/xdavld/c0490fc7d9fe3fea278102338155dd44/raw/088160c2500a1dabbb7d512710ccc1a86ce45785/flugrouten.csv",
     function (err, rows) {
       d3.select("#airline-type").on("change", function () {
-
         // Anzeigen der ausgewählten Airline
         var selectedAirline = this.value;
         if (selectedAirline === "---") {
@@ -223,11 +224,6 @@ updateData(delayAirport.value);
           bgcolor: "rgba(0,0,0,0)",
         },
       };
-
     }
   );
-
 });
-
-
-

@@ -1,3 +1,5 @@
+//An folgender Dokumentation orientiert: https://plotly.com/javascript/bar-charts/
+
 document.addEventListener("DOMContentLoaded", function () {
   //Barchart
   // CSV-Daten - hardgecoded

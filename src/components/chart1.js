@@ -1,3 +1,5 @@
+//An folgender Dokumentation orientiert: https://plotly.com/javascript/line-and-scatter/
+
 document.addEventListener("DOMContentLoaded", function () {
   //SCATTERPLOT
   d3.csv(

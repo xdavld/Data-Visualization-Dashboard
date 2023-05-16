@@ -1,3 +1,5 @@
+//An folgender Dokumentation orientiert: https://plotly.com/javascript/box-plots/
+
 document.addEventListener("DOMContentLoaded", function () {
   //BOXPLOT
   d3.csv("https://gist.githubusercontent.com/xdavld/fcf471b05e97587489285d9d86aba72c/raw/db159232908e43b34c3e90fbbf049ecd52be057f/arrival_delay_boxplot.csv", function(data) {

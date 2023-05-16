@@ -1,4 +1,6 @@
-document.addEventListener('DOMContentLoaded', function () {
+//An folgender Dokumentation orientiert: https://plotly.com/javascript/treemaps/
+
+document.addEventListener("DOMContentLoaded", function () {
   //TREEMAP ORIGIN & DESTINATION
   d3.csv(
     "https://gist.githubusercontent.com/xdavld/7e5231fa7930ac28a0db4d26c92eac01/raw/b9b31896669f498776f04bb907ba2571da05a96f/treemap_origin_stats.csv",
